@@ -42,7 +42,7 @@ namespace MobileManiaAPI.Helpers
                         break;
                 }
 
-                var result = JsonSerializer.Serialize(new { message = error?.Message });
+                var result = JsonSerializer.Serialize(new { message = error?.InnerException?.ToString() ?? error?.Message });
                 await response.WriteAsync(result);
             }
         }

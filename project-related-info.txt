@@ -1,0 +1,2 @@
+[connectionstring] 
+Scaffold-DbContext "Data Source=.; Initial Catalog=MobileManiaDB; User Id=basys; Password=sa123;Encrypt=False;TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir DBContext

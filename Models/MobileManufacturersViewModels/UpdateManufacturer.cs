@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MobileManiaAPI.Models.MobileManufacturers
+namespace MobileManiaAPI.Models.MobileManufacturersViewModels
 {
     public class UpdateManufacturer
     {

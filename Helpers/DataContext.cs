@@ -17,7 +17,9 @@ namespace MobileManiaAPI.Helpers
             // connect to sql server with connection string from app settings
             options.UseSqlServer(Configuration.GetConnectionString("WebApiDatabase"));
         }
-        public DbSet<Manufacturers> Manufacturers { get; set; }
+        public DbSet<Manufacturer> Manufacturers { get; set; }
+        public DbSet<MobileDetail> MobileDetail { get; set; }
+        public DbSet<User> Users { get; set; }
 
     }
 }

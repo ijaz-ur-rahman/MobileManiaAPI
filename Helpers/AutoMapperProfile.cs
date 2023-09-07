@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MobileManiaAPI.Entities;
-using MobileManiaAPI.Models.MobileManufacturers;
+using MobileManiaAPI.Models.MobileManufacturersViewModels;
+using MobileManiaAPI.Models.MobileViewModels;
 
 namespace MobileManiaAPI.Helpers
 {
@@ -9,7 +10,10 @@ namespace MobileManiaAPI.Helpers
         public AutoMapperProfile()
         {
             //CreateRequest->User
-            CreateMap<AddManufacturer, Manufacturers>();
+            CreateMap<Manufacturer, AddManufacturer>().ReverseMap();
+            CreateMap<Manufacturer, UpdateManufacturer>().ReverseMap();
+            CreateMap<MobileDetail, AddUpdateMobile>().ReverseMap();
+            CreateMap<MobileDetail, GetMobile>().ReverseMap();
 
             //// UpdateRequest -> User
             //CreateMap<UpdateRequest, User>()

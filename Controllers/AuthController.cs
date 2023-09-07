@@ -1,34 +1,34 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MobileManiaAPI.Helpers;
+using MobileManiaAPI.Models.AuthViewModels;
 using MobileManiaAPI.Services;
 
 namespace MobileManiaAPI.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]"), Authorize]
-    public class ManufacturerController : ControllerBase
+    public class AuthController : ControllerBase
     {
-        private IManufacturerService _manufacturerService;
+        private IAuthService _authService;
         private IMapper _mapper;
 
-
-        public ManufacturerController(
-            IManufacturerService manufacturerService,
+        public AuthController(
+            IAuthService authService,
             IMapper mapper)
         {
-            _manufacturerService = manufacturerService;
+            _authService = authService;
             _mapper = mapper;
 
         }
 
-        [HttpGet]
-        public IActionResult GetAll()
+        [HttpPost("Login")]
+        public IActionResult Post([FromBody] Login model)
         {
             try
             {
-                var result = _manufacturerService.GetAll();
+                var result = _authService.Login(model);
                 if (result.success)
                 {
                     return Ok(new
@@ -38,12 +38,13 @@ namespace MobileManiaAPI.Controllers
                     });
                 }
                 else
-
+                {
                     return Ok(new
                     {
                         Status = GeneralMessage.StatusFail,
                         Message = GeneralMessage.RecordNotFound
                     });
+                }
             }
 
             catch (Exception ex)
@@ -51,10 +52,6 @@ namespace MobileManiaAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
 
             }
-
         }
-
-
-
     }
 }

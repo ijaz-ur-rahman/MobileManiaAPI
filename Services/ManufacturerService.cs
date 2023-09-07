@@ -3,14 +3,14 @@ using Azure;
 using Microsoft.IdentityModel.Tokens;
 using MobileManiaAPI.Entities;
 using MobileManiaAPI.Helpers;
-using MobileManiaAPI.Models.MobileManufacturers;
+using MobileManiaAPI.Models.MobileManufacturersViewModels;
 
 namespace MobileManiaAPI.Services
 {
     public interface IManufacturerService
     {
-        ServiceResponse  GetAll();
-        ServiceResponse  GetById(int Id);
+        ServiceResponse GetAll();
+        ServiceResponse GetById(int Id);
         ServiceResponse Create(AddManufacturer model);
         ServiceResponse Update(int id, UpdateManufacturer model);
         ServiceResponse Delete(int id);
@@ -38,9 +38,10 @@ namespace MobileManiaAPI.Services
             throw new NotImplementedException();
         }
 
-        public ServiceResponse  GetAll()
+        public ServiceResponse GetAll()
         {
-            try {
+            try
+            {
 
                 var taskData = _context.Manufacturers.ToList().Select(x => new
                 {
@@ -49,22 +50,19 @@ namespace MobileManiaAPI.Services
                 }).ToList().OrderBy(x => x.ManufacturerId);
 
                 response.success = true;
-                response.data = new
-                {
-                    taskData
-                };
+                response.data = taskData;
                 return response;
 
-               
+
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            
+
         }
 
-        public ServiceResponse  GetById(int id)
+        public ServiceResponse GetById(int id)
         {
             throw new NotImplementedException();
         }
