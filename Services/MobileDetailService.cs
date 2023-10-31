@@ -5,6 +5,7 @@ using MobileManiaAPI.Entities;
 using MobileManiaAPI.Helpers;
 using MobileManiaAPI.Models.DashboardViewModels;
 using MobileManiaAPI.Models.MobileViewModels;
+using Newtonsoft.Json.Linq;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace MobileManiaAPI.Services
@@ -91,36 +92,147 @@ namespace MobileManiaAPI.Services
         {
             try
             {
-                var data = _context.MobileDetail.Where(m => model.Tourch == true ? m.Tourch == model.Tourch : false
-                    || model.Is3G == true ? m.Is3G == model.Is3G : false
-                    || model.Is4G == true ? m.Is4G == model.Is4G : false
-                    || model.Is5G == true ? m.Is5G == model.Is5G : false
-                    || model.Camera == true ? m.Camera == model.Camera : false
-                    || model.IsLatest == true ? m.IsLatest == model.IsLatest : false
-                    || model.IsAndroidPhone == true ? m.IsAndroidPhone == model.IsAndroidPhone : false
-                    || model.IsSmartPhone == true ? m.IsSmartPhone == model.IsSmartPhone : false
-                    || model.IsSymbianPhone == true ? m.IsSymbianPhone == model.IsSymbianPhone : false
-                    || model.IsWindowsPhone == true ? m.IsWindowsPhone == model.IsWindowsPhone : false
-                    || model.DisplayAtHomePage == true ? m.DisplayAtHomePage == model.DisplayAtHomePage : false)
-                      .OrderBy(m => m.MobileId).ToList();
+                var data = _context.MobileDetail.ToList()
+                    .Where(m => m.Tourch.IsEqual(model.Tourch)
+                    || m.Is3G.IsEqual(model.Is3G)
+                    || m.Is4G.IsEqual(model.Is4G)
+                    || m.Is5G.IsEqual(model.Is5G)
+                    || m.Camera.IsEqual(model.Camera)
+                    || m.IsLatest.IsEqual(model.IsLatest)
+                    || m.IsAndroidPhone.IsEqual(model.IsAndroidPhone)
+                    || m.IsSmartPhone.IsEqual(model.IsSmartPhone)
+                    || m.IsSymbianPhone.IsEqual(model.IsSymbianPhone)
+                    || m.IsWindowsPhone.IsEqual(model.IsWindowsPhone)
+                    || m.DisplayAtHomePage.IsEqual(model.DisplayAtHomePage))
+                    .Select(x => new GetMobile
+                    {
+                        MobileId = x.MobileId,
+                        Bluetooth = x.Bluetooth,
+                        BatteryStandby = x.BatteryStandby,
+                        BatteryType = x.BatteryType,
+                        Browser = x.Browser,
+                        Camera = x.Camera,
+                        CameraPixels = x.CameraPixels,
+                        CameraVideo = x.CameraVideo,
+                        CardSlot = x.CardSlot,
+                        Colors = x.Colors,
+                        Cpu = x.Cpu,
+                        Dimensions = x.Dimensions,
+                        DisplayAtHomePage = x.DisplayAtHomePage,
+                        DisplayOrder = x.DisplayOrder,
+                        Edge = x.Edge,
+                        Entertainment = x.Entertainment,
+                        FeaturesOfCamera = x.FeaturesOfCamera,
+                        Games = x.Games,
+                        Gprs = x.Gprs,
+                        Gps = x.Gps,
+                        Gpu = x.Gpu,
+                        InternalMemory = x.InternalMemory,
+                        Is3G = x.Is3G,
+                        Is4G = x.Is4G,
+                    }).OrderBy(m => m.MobileId).ToList();
                 response.success = true;
                 response.data = data;
                 return response;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }
         }
         public ServiceResponse FilterMobileByValue(GetMobileByValue model)
         {
-            var data = _context.MobileDetail.ToList();
-            throw new NotImplementedException();
+            try
+            {
+                var data = _context.MobileDetail.ToList()
+                    .Where(m => model.Colors.Any(n => m.Colors!.ToString().Contains(n))
+                    || model.Os.Any(n => m.Os!.ToString().Contains(n))
+                    || model.Manufacturers.Contains(m.ManufacturerId.ToInt32()))
+                    .Select(x => new GetMobile
+                    {
+                        MobileId = x.MobileId,
+                        Bluetooth = x.Bluetooth,
+                        BatteryStandby = x.BatteryStandby,
+                        BatteryType = x.BatteryType,
+                        Browser = x.Browser,
+                        Camera = x.Camera,
+                        CameraPixels = x.CameraPixels,
+                        CameraVideo = x.CameraVideo,
+                        CardSlot = x.CardSlot,
+                        Colors = x.Colors,
+                        Cpu = x.Cpu,
+                        Dimensions = x.Dimensions,
+                        DisplayAtHomePage = x.DisplayAtHomePage,
+                        DisplayOrder = x.DisplayOrder,
+                        Edge = x.Edge,
+                        Entertainment = x.Entertainment,
+                        FeaturesOfCamera = x.FeaturesOfCamera,
+                        Games = x.Games,
+                        Gprs = x.Gprs,
+                        Gps = x.Gps,
+                        Gpu = x.Gpu,
+                        InternalMemory = x.InternalMemory,
+                        Is3G = x.Is3G,
+                        Is4G = x.Is4G,
+                    }).OrderBy(m => m.MobileId).ToList();
+                response.success = true;
+                response.data = data;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
         public ServiceResponse FilterMobileByRange(GetMobileByRange model)
         {
-            var data = _context.MobileDetail.ToList();
-            throw new NotImplementedException();
+            try
+            {
+                var data = _context.MobileDetail.ToList()
+                    .Where(m => m.MobilePrice.IsBetween(model.MinMobilePrice, model.MaxMobilePrice)
+                    || m.MobilePriceInDollors.IsBetween(model.MinMobilePriceInDollors, model.MaxMobilePriceInDollors)
+                    || m.ScreenSizeInInches.IsBetween(model.MinScreenSize, model.MaxScreenSize)
+                    || model.TalktimeRange!.Contains(m.Talktime!.ToString())
+                    || model.PrimaryCameraRange!.Contains(m.PrimaryCamera!.ToString())
+                    || model.SecondaryCameraRange!.Contains(m.SecondaryCamera!.ToString())
+                    || model.InternalMemoryRange!.Contains(m.InternalMemory!.ToString())
+                    || model.BatteryStandbyRange!.Contains(m.BatteryStandby!.ToString()))
+                    .Select(x => new GetMobile
+                    {
+                        MobileId = x.MobileId,
+                        Bluetooth = x.Bluetooth,
+                        BatteryStandby = x.BatteryStandby,
+                        BatteryType = x.BatteryType,
+                        Browser = x.Browser,
+                        Camera = x.Camera,
+                        CameraPixels = x.CameraPixels,
+                        CameraVideo = x.CameraVideo,
+                        CardSlot = x.CardSlot,
+                        Colors = x.Colors,
+                        Cpu = x.Cpu,
+                        Dimensions = x.Dimensions,
+                        DisplayAtHomePage = x.DisplayAtHomePage,
+                        DisplayOrder = x.DisplayOrder,
+                        Edge = x.Edge,
+                        Entertainment = x.Entertainment,
+                        FeaturesOfCamera = x.FeaturesOfCamera,
+                        Games = x.Games,
+                        Gprs = x.Gprs,
+                        Gps = x.Gps,
+                        Gpu = x.Gpu,
+                        InternalMemory = x.InternalMemory,
+                        Is3G = x.Is3G,
+                        Is4G = x.Is4G,
+                    }).OrderBy(m => m.MobileId).ToList();
+                response.success = true;
+                response.data = data;
+                return response;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
         public ServiceResponse GetAll()

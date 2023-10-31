@@ -120,7 +120,7 @@ namespace MobileManiaAPI.Services
         {
             try
             {
-                var mobileList = _context.MobileDetail.Where(m => m.MobilePrice >= minPrice && m.MobilePrice <= maxPrice)
+                var mobileList = _context.MobileDetail.ToList().Where(m => m.MobilePrice >= minPrice && m.MobilePrice <= maxPrice)
                     .Select(x => new GetMobile
                     {
                         MobileId = x.MobileId,

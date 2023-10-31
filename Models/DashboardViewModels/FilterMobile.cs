@@ -26,83 +26,22 @@
     }
     public class GetMobileByValue
     {
-        public string? TwoGnetwork { get; set; }
-
-        public string? Sim { get; set; }
-
-        public string? Dimensions { get; set; }
-
-        public string? Weight { get; set; }
-
-        public string? Type { get; set; }
-
-        public string? ScreenSize { get; set; }
-
-        public string? CardSlot { get; set; }
-
-        public string? InternalMemory { get; set; }
-
-        public string? Gprs { get; set; }
-
-        public string? Edge { get; set; }
-
-        public string? Speed { get; set; }
-
-        public string? Wlan { get; set; }
-
-        public string? Bluetooth { get; set; }
-
-        public string? Usb { get; set; }
-
-        public string? PrimaryCamera { get; set; }
-
-        public string? FeaturesOfCamera { get; set; }
-
-        public string? CameraVideo { get; set; }
-
-        public string? SecondaryCamera { get; set; }
-
-        public string? Os { get; set; }
-
-        public string? Cpu { get; set; }
-
-        public string? Gpu { get; set; }
-
-        public string? Messaging { get; set; }
-
-        public string? Radio { get; set; }
-
-        public string? Browser { get; set; }
-
-        public string? Games { get; set; }
-
-        public string? Gps { get; set; }
-
-        public string? Java { get; set; }
-
-        public string? Colors { get; set; }
-
-        public string? BatteryType { get; set; }
-
-        public string? BatteryStandby { get; set; }
-
-        public string? Talktime { get; set; }
-
-        public string? Entertainment { get; set; }
-
-        public string? WhatsNew { get; set; }
-
-        public string? _3gband { get; set; }
-
-        public string? _4gband { get; set; }
-        public string? _5gband { get; set; }
-
-        public decimal? ScreenSizeInInches { get; set; }
-
-        public string? ManufacturerName { get; set; }
+        public List<string> Colors { get; set; } = new List<string>();
+        public List<string> Os { get; set; } = new List<string>();
+        public List<int> Manufacturers { get; set; } = new List<int>();
     }
     public class GetMobileByRange
     {
-
+        public int? MinMobilePrice { get; set; }
+        public int? MaxMobilePrice { get; set; }
+        public decimal? MinMobilePriceInDollors { get; set; }
+        public decimal? MaxMobilePriceInDollors { get; set; }        
+        public decimal? MinScreenSize { get; set; }
+        public decimal? MaxScreenSize { get; set; }
+        public List<string> InternalMemoryRange { get; set; } = new List<string>();
+        public List<string> PrimaryCameraRange { get; set; } = new List<string>();
+        public List<string> SecondaryCameraRange { get; set; } = new List<string>();
+        public List<string> BatteryStandbyRange { get; set; } = new List<string>();
+        public List<string> TalktimeRange { get; set; } = new List<string>();
     }
 }

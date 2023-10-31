@@ -60,7 +60,7 @@ namespace MobileManiaAPI.Controllers
         }
         // GET: api/<MobileDetailsController>
         [HttpGet("GetMobilesByValue")]
-        public IActionResult GetMobilesByValue(GetMobileByValue model)
+        public IActionResult GetMobilesByValue([FromQuery] GetMobileByValue model)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace MobileManiaAPI.Controllers
         }
         // GET: api/<MobileDetailsController>
         [HttpGet("GetMobilesByRange")]
-        public IActionResult GetMobilesByRange(GetMobileByRange model)
+        public IActionResult GetMobilesByRange([FromQuery] GetMobileByRange model)
         {
             try
             {
@@ -114,8 +114,7 @@ namespace MobileManiaAPI.Controllers
                     });
                 }
             }
-
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
 
