@@ -2,6 +2,7 @@
 using Humanizer;
 using Newtonsoft.Json.Linq;
 
+
 namespace MobileManiaAPI.Helpers
 {
     public static class HelperMethods
@@ -37,6 +38,11 @@ namespace MobileManiaAPI.Helpers
             if (value1 == null || value2 == null)
                 return false;
             return value1.Equals(value2);
+        }
+        public static IWebHostEnvironment WebEnv()
+        {
+            var _accessor = new HttpContextAccessor();
+            return _accessor.HttpContext!.RequestServices.GetRequiredService<IWebHostEnvironment>();
         }
     }
 

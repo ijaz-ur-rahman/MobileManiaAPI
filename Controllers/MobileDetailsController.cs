@@ -147,7 +147,7 @@ namespace MobileManiaAPI.Controllers
 
         // POST api/<MobileDetailsController>
         [HttpPost]
-        public IActionResult Post([FromBody] AddUpdateMobile model)
+        public IActionResult Post([FromForm] AddUpdateMobile model)
         {
             var result = _mobileDetailService.Create(model);
             if (result.success)
@@ -170,7 +170,7 @@ namespace MobileManiaAPI.Controllers
 
         // PUT api/<MobileDetailsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromForm] AddUpdateMobile model)
         {
         }
 

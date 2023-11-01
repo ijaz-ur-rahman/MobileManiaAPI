@@ -2,17 +2,11 @@
 {
     public class AddUpdateMobile
     {
-        public int MobileId { get; set; }
-
         public string? MobileName { get; set; }
 
         public int? MobilePrice { get; set; }
 
         public decimal? MobilePriceInDollors { get; set; }
-
-        public string? MobileImageS { get; set; }
-
-        public string? MobileImageL { get; set; }
 
         public int? ManufacturerId { get; set; }
 

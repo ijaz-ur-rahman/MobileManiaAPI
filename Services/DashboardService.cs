@@ -22,13 +22,17 @@ namespace MobileManiaAPI.Services
         private ServiceResponse response;
         private DataContext _context;
         private readonly IMapper _mapper;
+        private IWebHostEnvironment _environment;
+
         public DashboardService(
         DataContext context,
-        IMapper mapper)
+        IMapper mapper,
+        IWebHostEnvironment environment)
         {
             _context = context;
             _mapper = mapper;
             response = new ServiceResponse();
+            _environment = environment;
         }
 
         public ServiceResponse GetAll()
@@ -38,6 +42,7 @@ namespace MobileManiaAPI.Services
                 var mobileList = _context.MobileDetail.Select(x => new GetMobile
                 {
                     MobileId = x.MobileId,
+                    MobileName = x.MobileName,
                     Bluetooth = x.Bluetooth,
                     BatteryStandby = x.BatteryStandby,
                     BatteryType = x.BatteryType,
@@ -61,6 +66,8 @@ namespace MobileManiaAPI.Services
                     InternalMemory = x.InternalMemory,
                     Is3G = x.Is3G,
                     Is4G = x.Is4G,
+                    MobileImageS = SetImagePath(x.MobileImageS!.ToString()),
+                    MobileImageL = SetImagePath(x.MobileImageL!.ToString()),
                 }).OrderBy(x => x.MobileId).ToList();
 
                 response.success = true;
@@ -81,6 +88,7 @@ namespace MobileManiaAPI.Services
                     .Select(x => new GetMobile
                     {
                         MobileId = x.MobileId,
+                        MobileName = x.MobileName,
                         Bluetooth = x.Bluetooth,
                         BatteryStandby = x.BatteryStandby,
                         BatteryType = x.BatteryType,
@@ -104,6 +112,8 @@ namespace MobileManiaAPI.Services
                         InternalMemory = x.InternalMemory,
                         Is3G = x.Is3G,
                         Is4G = x.Is4G,
+                        MobileImageS = SetImagePath(x.MobileImageS!.ToString()),
+                        MobileImageL = SetImagePath(x.MobileImageL!.ToString()),
                     }).OrderBy(x => x.MobileId).ToList();
 
                 response.success = true;
@@ -124,6 +134,7 @@ namespace MobileManiaAPI.Services
                     .Select(x => new GetMobile
                     {
                         MobileId = x.MobileId,
+                        MobileName = x.MobileName,
                         Bluetooth = x.Bluetooth,
                         BatteryStandby = x.BatteryStandby,
                         BatteryType = x.BatteryType,
@@ -147,6 +158,8 @@ namespace MobileManiaAPI.Services
                         InternalMemory = x.InternalMemory,
                         Is3G = x.Is3G,
                         Is4G = x.Is4G,
+                        MobileImageS = SetImagePath(x.MobileImageS!.ToString()),
+                        MobileImageL = SetImagePath(x.MobileImageL!.ToString()),
                     }).OrderBy(x => x.MobilePrice).ToList();
 
                 response.success = true;
@@ -167,6 +180,7 @@ namespace MobileManiaAPI.Services
                     .Select(x => new GetMobile
                     {
                         MobileId = x.MobileId,
+                        MobileName = x.MobileName,
                         Bluetooth = x.Bluetooth,
                         BatteryStandby = x.BatteryStandby,
                         BatteryType = x.BatteryType,
@@ -190,6 +204,8 @@ namespace MobileManiaAPI.Services
                         InternalMemory = x.InternalMemory,
                         Is3G = x.Is3G,
                         Is4G = x.Is4G,
+                        MobileImageS = SetImagePath(x.MobileImageS!.ToString()),
+                        MobileImageL = SetImagePath(x.MobileImageL!.ToString()),
                     }).OrderBy(x => x.MobileId).ToList();
 
                 response.success = true;
@@ -210,6 +226,7 @@ namespace MobileManiaAPI.Services
                     .Select(x => new GetMobile
                     {
                         MobileId = x.MobileId,
+                        MobileName = x.MobileName,
                         Bluetooth = x.Bluetooth,
                         BatteryStandby = x.BatteryStandby,
                         BatteryType = x.BatteryType,
@@ -233,6 +250,8 @@ namespace MobileManiaAPI.Services
                         InternalMemory = x.InternalMemory,
                         Is3G = x.Is3G,
                         Is4G = x.Is4G,
+                        MobileImageS = SetImagePath(x.MobileImageS!.ToString()),
+                        MobileImageL = SetImagePath(x.MobileImageL!.ToString()),
                     }).OrderBy(x => x.MobileId).ToList();
 
                 response.success = true;
@@ -253,6 +272,7 @@ namespace MobileManiaAPI.Services
                     .Select(x => new GetMobile
                     {
                         MobileId = x.MobileId,
+                        MobileName = x.MobileName,
                         Bluetooth = x.Bluetooth,
                         BatteryStandby = x.BatteryStandby,
                         BatteryType = x.BatteryType,
@@ -276,8 +296,9 @@ namespace MobileManiaAPI.Services
                         InternalMemory = x.InternalMemory,
                         Is3G = x.Is3G,
                         Is4G = x.Is4G,
+                        MobileImageS = SetImagePath(x.MobileImageS!.ToString()),
+                        MobileImageL = SetImagePath(x.MobileImageL!.ToString()),
                     }).OrderBy(x => x.MobileId).ToList();
-
                 response.success = true;
                 response.data = mobileList;
                 return response;
@@ -286,6 +307,22 @@ namespace MobileManiaAPI.Services
             {
                 throw;
             }
+        }
+        public static string[]? SetImagePath(string value)
+        {
+            string folderName = "UploadedImages";
+            string FilePath = Path.Combine(HelperMethods.WebEnv().ContentRootPath, folderName);
+
+            if (value != null)
+            {
+                string[] images = value.Split("||");
+                foreach (var item in images)
+                {
+                    _ = item.Replace(item, Path.Combine(FilePath, item));
+                }
+                return images;
+            }
+            return null;
         }
     }
 }

@@ -80,6 +80,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddDbContext<DataContext>();
 builder.Services.AddCors();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

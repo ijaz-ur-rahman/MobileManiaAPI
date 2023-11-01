@@ -22,6 +22,8 @@
 
   <ItemGroup>
     <Folder Include="Models\GenericViewModels\" />
+    <Folder Include="UploadedImages\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>

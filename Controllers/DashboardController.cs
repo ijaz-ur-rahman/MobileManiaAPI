@@ -14,14 +14,16 @@ namespace MobileManiaAPI.Controllers
     {
         private IDashboardService _dashboardService;
         private IMapper _mapper;
+        private IWebHostEnvironment _environment;
 
         public DashboardController(
             IDashboardService dashboardService,
-            IMapper mapper)
+            IMapper mapper,
+            IWebHostEnvironment environment)
         {
             _dashboardService = dashboardService;
             _mapper = mapper;
-
+            _environment = environment;
         }
 
         [HttpGet("GetAllMobiles")]
@@ -209,6 +211,15 @@ namespace MobileManiaAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
 
             }
+        }
+
+
+        [HttpGet("/GetImage")]
+        public IActionResult Get(string imagePath)
+        {
+            string FilePath = Path.Combine(_environment.ContentRootPath, "UploadedImages");
+
+            return PhysicalFile(imagePath, "image/jpeg");
         }
     }
 }

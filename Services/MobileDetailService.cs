@@ -43,31 +43,34 @@ namespace MobileManiaAPI.Services
             {
                 var mobileDetails = _mapper.Map<MobileDetail>(model);
 
-                string FilePath = Path.Combine(_environment.WebRootPath, "UploadedImages");
+                string folderName = "UploadedImages";
+                string FilePath = Path.Combine(_environment.ContentRootPath, folderName);
 
                 if (!Directory.Exists(FilePath))
                     Directory.CreateDirectory(FilePath);
 
                 foreach (var file in model.SmallImages!)
                 {
-                    var filePath = Path.Combine(FilePath, Guid.NewGuid().ToString() + Path.GetExtension(file.Name));
+                    string imageName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    var filePath = Path.Combine(FilePath, imageName);
 
                     using (FileStream fs = System.IO.File.Create(filePath))
                     {
                         file.CopyTo(fs);
                     }
-                    mobileDetails.MobileImageS = string.IsNullOrEmpty(mobileDetails.MobileImageS) ? filePath : " || " + filePath;
+                    mobileDetails.MobileImageS = string.IsNullOrEmpty(mobileDetails.MobileImageS) ? folderName + "\\" + imageName : " || " + folderName + "\\" + imageName;
                 }
 
                 foreach (var file in model.LargeImages!)
                 {
-                    var filePath = Path.Combine(FilePath, Guid.NewGuid().ToString() + Path.GetExtension(file.Name));
+                    string imageName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    var filePath = Path.Combine(FilePath, imageName);
 
                     using (FileStream fs = System.IO.File.Create(filePath))
                     {
                         file.CopyTo(fs);
                     }
-                    mobileDetails.MobileImageL = string.IsNullOrEmpty(mobileDetails.MobileImageL) ? filePath : " || " + filePath;
+                    mobileDetails.MobileImageL = string.IsNullOrEmpty(mobileDetails.MobileImageL) ? folderName + "\\" + imageName : " || " + folderName + "\\" + imageName;
                 }
 
                 _context.MobileDetail.Add(mobileDetails);
@@ -107,6 +110,7 @@ namespace MobileManiaAPI.Services
                     .Select(x => new GetMobile
                     {
                         MobileId = x.MobileId,
+                        MobileName = x.MobileName,
                         Bluetooth = x.Bluetooth,
                         BatteryStandby = x.BatteryStandby,
                         BatteryType = x.BatteryType,
@@ -151,6 +155,7 @@ namespace MobileManiaAPI.Services
                     .Select(x => new GetMobile
                     {
                         MobileId = x.MobileId,
+                        MobileName = x.MobileName,
                         Bluetooth = x.Bluetooth,
                         BatteryStandby = x.BatteryStandby,
                         BatteryType = x.BatteryType,
@@ -200,6 +205,7 @@ namespace MobileManiaAPI.Services
                     .Select(x => new GetMobile
                     {
                         MobileId = x.MobileId,
+                        MobileName = x.MobileName,
                         Bluetooth = x.Bluetooth,
                         BatteryStandby = x.BatteryStandby,
                         BatteryType = x.BatteryType,
@@ -281,7 +287,7 @@ namespace MobileManiaAPI.Services
         {
             try
             {
-                var mobileDetails = _context.MobileDetail.Select(x => new GetMobile
+                var mobileDetails = _context.MobileDetail.Where(m => m.MobileId == id).Select(x => new GetMobile
                 {
                     MobileId = x.MobileId,
                     Bluetooth = x.Bluetooth,
@@ -307,6 +313,8 @@ namespace MobileManiaAPI.Services
                     InternalMemory = x.InternalMemory,
                     Is3G = x.Is3G,
                     Is4G = x.Is4G,
+                    MobileImageS = SetImagePath(x.MobileImageS!.ToString()),
+                    MobileImageL = SetImagePath(x.MobileImageL!.ToString()),
                 }).FirstOrDefault();
 
                 response.success = true;
@@ -322,6 +330,22 @@ namespace MobileManiaAPI.Services
         public ServiceResponse Update(int id, AddUpdateMobile model)
         {
             throw new NotImplementedException();
+        }
+        public static string[]? SetImagePath(string value)
+        {
+            string folderName = "UploadedImages";
+            string FilePath = Path.Combine(HelperMethods.WebEnv().ContentRootPath, folderName);
+
+            if (!string.IsNullOrEmpty(value))
+            {
+                string[] images = value.Split("||");
+                foreach (var item in images)
+                {
+                    _ = item.Replace(item, Path.Combine(FilePath, item));
+                }
+                return images;
+            }
+            return null;
         }
     }
 }
