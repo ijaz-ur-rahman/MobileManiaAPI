@@ -5,6 +5,7 @@ using MobileManiaAPI.Entities;
 using MobileManiaAPI.Helpers;
 using MobileManiaAPI.Models.DashboardViewModels;
 using MobileManiaAPI.Models.MobileViewModels;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace MobileManiaAPI.Services
 {
@@ -327,11 +328,16 @@ namespace MobileManiaAPI.Services
                 throw;
             }
         }
-        public static string[]? SetImagePath(string value)
+        public static List<string>? SetImagePath(string value)
         {
             if (!string.IsNullOrEmpty(value))
             {
-                return value.Split("||");
+                List<string> images = new();
+                foreach (var item in value.Split("||"))
+                {
+                    images.Add(Path.Combine(HelperMethods.BaseUrl() + "/GetImage?imageName=", item));
+                }
+                return images;
             }
             return null;
         }

@@ -1,5 +1,6 @@
 ﻿using Azure;
 using Humanizer;
+using Microsoft.AspNetCore.Http.Extensions;
 using Newtonsoft.Json.Linq;
 
 
@@ -43,6 +44,14 @@ namespace MobileManiaAPI.Helpers
         {
             var _accessor = new HttpContextAccessor();
             return _accessor.HttpContext!.RequestServices.GetRequiredService<IWebHostEnvironment>();
+        }
+        public static string BaseUrl()
+        {
+            var _accessor = new HttpContextAccessor();
+            var request = _accessor.HttpContext!.Request;
+            var baseUrl = $"{request.Scheme}://{request.Host.Value}{request.PathBase.Value}";
+
+            return baseUrl;
         }
     }
 

@@ -14,9 +14,9 @@
 
         public decimal? MobilePriceInDollors { get; set; }
 
-        public string[]? MobileImageS { get; set; }
+        public List<string>? MobileImageS { get; set; }
 
-        public string[]? MobileImageL { get; set; }
+        public List<string>? MobileImageL { get; set; }
 
         public int? ManufacturerId { get; set; }
 

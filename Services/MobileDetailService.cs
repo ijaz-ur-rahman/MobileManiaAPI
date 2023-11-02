@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Azure;
+using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using MobileManiaAPI.Entities;
 using MobileManiaAPI.Helpers;
@@ -27,15 +28,19 @@ namespace MobileManiaAPI.Services
         private DataContext _context;
         private readonly IMapper _mapper;
         private IWebHostEnvironment _environment;
+        private readonly IHttpContextAccessor _accessor;
+
         public MobileDetailService(
         DataContext context,
         IMapper mapper,
-        IWebHostEnvironment environment)
+        IWebHostEnvironment environment,
+        IHttpContextAccessor accessor)
         {
             _context = context;
             _mapper = mapper;
             response = new ServiceResponse<List<GetMobile>>();
             _environment = environment;
+            _accessor = accessor;
         }
         public ServiceResponse<string> Create(AddUpdateMobile model)
         {
@@ -360,11 +365,16 @@ namespace MobileManiaAPI.Services
         {
             throw new NotImplementedException();
         }
-        public static string[]? SetImagePath(string value)
+        public static List<string>? SetImagePath(string value)
         {
             if (!string.IsNullOrEmpty(value))
             {
-                return value.Split("||");
+                List<string> images = new();
+                foreach (var item in value.Split("||"))
+                {
+                    images.Add(Path.Combine(HelperMethods.BaseUrl() + "/GetImage?imageName=", item));
+                }
+                return images;
             }
             return null;
         }
