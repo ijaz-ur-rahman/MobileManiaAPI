@@ -43,6 +43,9 @@ namespace MobileManiaAPI.Services
                 {
                     MobileId = x.MobileId,
                     MobileName = x.MobileName,
+                    MobilePrice = x.MobilePrice,
+                    MobilePriceInDollors = x.MobilePriceInDollors,
+                    Os = x.Os,
                     Bluetooth = x.Bluetooth,
                     BatteryStandby = x.BatteryStandby,
                     BatteryType = x.BatteryType,
@@ -89,6 +92,9 @@ namespace MobileManiaAPI.Services
                     {
                         MobileId = x.MobileId,
                         MobileName = x.MobileName,
+                        MobilePrice = x.MobilePrice,
+                        MobilePriceInDollors = x.MobilePriceInDollors,
+                        Os = x.Os,
                         Bluetooth = x.Bluetooth,
                         BatteryStandby = x.BatteryStandby,
                         BatteryType = x.BatteryType,
@@ -136,6 +142,9 @@ namespace MobileManiaAPI.Services
                     {
                         MobileId = x.MobileId,
                         MobileName = x.MobileName,
+                        MobilePrice = x.MobilePrice,
+                        MobilePriceInDollors = x.MobilePriceInDollors,
+                        Os = x.Os,
                         Bluetooth = x.Bluetooth,
                         BatteryStandby = x.BatteryStandby,
                         BatteryType = x.BatteryType,
@@ -182,6 +191,9 @@ namespace MobileManiaAPI.Services
                     {
                         MobileId = x.MobileId,
                         MobileName = x.MobileName,
+                        MobilePrice = x.MobilePrice,
+                        MobilePriceInDollors = x.MobilePriceInDollors,
+                        Os = x.Os,
                         Bluetooth = x.Bluetooth,
                         BatteryStandby = x.BatteryStandby,
                         BatteryType = x.BatteryType,
@@ -228,6 +240,9 @@ namespace MobileManiaAPI.Services
                     {
                         MobileId = x.MobileId,
                         MobileName = x.MobileName,
+                        MobilePrice = x.MobilePrice,
+                        MobilePriceInDollors = x.MobilePriceInDollors,
+                        Os = x.Os,
                         Bluetooth = x.Bluetooth,
                         BatteryStandby = x.BatteryStandby,
                         BatteryType = x.BatteryType,
@@ -274,6 +289,9 @@ namespace MobileManiaAPI.Services
                     {
                         MobileId = x.MobileId,
                         MobileName = x.MobileName,
+                        MobilePrice = x.MobilePrice,
+                        MobilePriceInDollors = x.MobilePriceInDollors,
+                        Os = x.Os,
                         Bluetooth = x.Bluetooth,
                         BatteryStandby = x.BatteryStandby,
                         BatteryType = x.BatteryType,
