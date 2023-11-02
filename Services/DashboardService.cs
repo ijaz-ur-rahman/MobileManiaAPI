@@ -10,16 +10,16 @@ namespace MobileManiaAPI.Services
 {
     public interface IDashboardService
     {
-        ServiceResponse GetAll();
-        ServiceResponse GetByBrand(int brandId);
-        ServiceResponse GetByPrice(int minPrice, int maxPrice);
-        ServiceResponse GetByOS(string osName);
-        ServiceResponse GetByNetwork(string networkName);
-        ServiceResponse GetByCamera(int cameraPixal);
+        ServiceResponse<List<GetMobile>> GetAll();
+        ServiceResponse<List<GetMobile>> GetByBrand(int brandId);
+        ServiceResponse<List<GetMobile>> GetByPrice(int minPrice, int maxPrice);
+        ServiceResponse<List<GetMobile>> GetByOS(string osName);
+        ServiceResponse<List<GetMobile>> GetByNetwork(string networkName);
+        ServiceResponse<List<GetMobile>> GetByCamera(int cameraPixal);
     }
     public class DashboardService : IDashboardService
     {
-        private ServiceResponse response;
+        private ServiceResponse<List<GetMobile>> response;
         private DataContext _context;
         private readonly IMapper _mapper;
         private IWebHostEnvironment _environment;
@@ -31,11 +31,11 @@ namespace MobileManiaAPI.Services
         {
             _context = context;
             _mapper = mapper;
-            response = new ServiceResponse();
+            response = new ServiceResponse<List<GetMobile>>();
             _environment = environment;
         }
 
-        public ServiceResponse GetAll()
+        public ServiceResponse<List<GetMobile>> GetAll()
         {
             try
             {
@@ -66,8 +66,8 @@ namespace MobileManiaAPI.Services
                     InternalMemory = x.InternalMemory,
                     Is3G = x.Is3G,
                     Is4G = x.Is4G,
-                    MobileImageS = SetImagePath(x.MobileImageS!.ToString()),
-                    MobileImageL = SetImagePath(x.MobileImageL!.ToString()),
+                    MobileImageS = SetImagePath(x.MobileImageS!),
+                    MobileImageL = SetImagePath(x.MobileImageL!),
                 }).OrderBy(x => x.MobileId).ToList();
 
                 response.success = true;
@@ -80,7 +80,7 @@ namespace MobileManiaAPI.Services
             }
         }
 
-        public ServiceResponse GetByBrand(int brandId)
+        public ServiceResponse<List<GetMobile>> GetByBrand(int brandId)
         {
             try
             {
@@ -112,8 +112,8 @@ namespace MobileManiaAPI.Services
                         InternalMemory = x.InternalMemory,
                         Is3G = x.Is3G,
                         Is4G = x.Is4G,
-                        MobileImageS = SetImagePath(x.MobileImageS!.ToString()),
-                        MobileImageL = SetImagePath(x.MobileImageL!.ToString()),
+                        MobileImageS = SetImagePath(x.MobileImageS!),
+                        MobileImageL = SetImagePath(x.MobileImageL!),
                     }).OrderBy(x => x.MobileId).ToList();
 
                 response.success = true;
@@ -126,11 +126,12 @@ namespace MobileManiaAPI.Services
             }
         }
 
-        public ServiceResponse GetByPrice(int minPrice, int maxPrice)
+        public ServiceResponse<List<GetMobile>> GetByPrice(int minPrice, int maxPrice)
         {
             try
             {
-                var mobileList = _context.MobileDetail.ToList().Where(m => m.MobilePrice >= minPrice && m.MobilePrice <= maxPrice)
+                var mobileList = _context.MobileDetail.ToList()
+                    .Where(m => m.MobilePrice >= minPrice && m.MobilePrice <= maxPrice)
                     .Select(x => new GetMobile
                     {
                         MobileId = x.MobileId,
@@ -158,8 +159,8 @@ namespace MobileManiaAPI.Services
                         InternalMemory = x.InternalMemory,
                         Is3G = x.Is3G,
                         Is4G = x.Is4G,
-                        MobileImageS = SetImagePath(x.MobileImageS!.ToString()),
-                        MobileImageL = SetImagePath(x.MobileImageL!.ToString()),
+                        MobileImageS = SetImagePath(x.MobileImageS!),
+                        MobileImageL = SetImagePath(x.MobileImageL!),
                     }).OrderBy(x => x.MobilePrice).ToList();
 
                 response.success = true;
@@ -172,7 +173,7 @@ namespace MobileManiaAPI.Services
             }
         }
 
-        public ServiceResponse GetByOS(string osName)
+        public ServiceResponse<List<GetMobile>> GetByOS(string osName)
         {
             try
             {
@@ -204,8 +205,8 @@ namespace MobileManiaAPI.Services
                         InternalMemory = x.InternalMemory,
                         Is3G = x.Is3G,
                         Is4G = x.Is4G,
-                        MobileImageS = SetImagePath(x.MobileImageS!.ToString()),
-                        MobileImageL = SetImagePath(x.MobileImageL!.ToString()),
+                        MobileImageS = SetImagePath(x.MobileImageS!),
+                        MobileImageL = SetImagePath(x.MobileImageL!),
                     }).OrderBy(x => x.MobileId).ToList();
 
                 response.success = true;
@@ -218,7 +219,7 @@ namespace MobileManiaAPI.Services
             }
         }
 
-        public ServiceResponse GetByNetwork(string networkName)
+        public ServiceResponse<List<GetMobile>> GetByNetwork(string networkName)
         {
             try
             {
@@ -250,8 +251,8 @@ namespace MobileManiaAPI.Services
                         InternalMemory = x.InternalMemory,
                         Is3G = x.Is3G,
                         Is4G = x.Is4G,
-                        MobileImageS = SetImagePath(x.MobileImageS!.ToString()),
-                        MobileImageL = SetImagePath(x.MobileImageL!.ToString()),
+                        MobileImageS = SetImagePath(x.MobileImageS!),
+                        MobileImageL = SetImagePath(x.MobileImageL!),
                     }).OrderBy(x => x.MobileId).ToList();
 
                 response.success = true;
@@ -264,7 +265,7 @@ namespace MobileManiaAPI.Services
             }
         }
 
-        public ServiceResponse GetByCamera(int cameraPixal)
+        public ServiceResponse<List<GetMobile>> GetByCamera(int cameraPixal)
         {
             try
             {
@@ -296,8 +297,8 @@ namespace MobileManiaAPI.Services
                         InternalMemory = x.InternalMemory,
                         Is3G = x.Is3G,
                         Is4G = x.Is4G,
-                        MobileImageS = SetImagePath(x.MobileImageS!.ToString()),
-                        MobileImageL = SetImagePath(x.MobileImageL!.ToString()),
+                        MobileImageS = SetImagePath(x.MobileImageS!),
+                        MobileImageL = SetImagePath(x.MobileImageL!),
                     }).OrderBy(x => x.MobileId).ToList();
                 response.success = true;
                 response.data = mobileList;
@@ -310,17 +311,9 @@ namespace MobileManiaAPI.Services
         }
         public static string[]? SetImagePath(string value)
         {
-            string folderName = "UploadedImages";
-            string FilePath = Path.Combine(HelperMethods.WebEnv().ContentRootPath, folderName);
-
-            if (value != null)
+            if (!string.IsNullOrEmpty(value))
             {
-                string[] images = value.Split("||");
-                foreach (var item in images)
-                {
-                    _ = item.Replace(item, Path.Combine(FilePath, item));
-                }
-                return images;
+                return value.Split("||");
             }
             return null;
         }

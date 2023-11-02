@@ -214,12 +214,12 @@ namespace MobileManiaAPI.Controllers
         }
 
 
-        [HttpGet("/GetImage")]
-        public IActionResult Get(string imagePath)
+        [HttpGet("/GetImage"), AllowAnonymous]
+        public IActionResult Get([FromQuery] string imageName)
         {
-            string FilePath = Path.Combine(_environment.ContentRootPath, "UploadedImages");
+            string FilePath = Path.Combine(_environment.WebRootPath, imageName);
 
-            return PhysicalFile(imagePath, "image/jpeg");
+            return PhysicalFile(FilePath, "image/jpeg");
         }
     }
 }

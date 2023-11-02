@@ -12,11 +12,11 @@ namespace MobileManiaAPI.Services
 {
     public interface IAuthService
     {
-        ServiceResponse Login(Login model);
+        ServiceResponse<string> Login(Login model);
     }
     public class AuthService : IAuthService
     {
-        private ServiceResponse response;
+        private ServiceResponse<string> response;
         private DataContext _context;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
@@ -27,10 +27,10 @@ namespace MobileManiaAPI.Services
         {
             _context = context;
             _mapper = mapper;
-            response = new ServiceResponse();
+            response = new ServiceResponse<string>();
             _configuration = configuration;
         }
-        public ServiceResponse Login(Login model)
+        public ServiceResponse<string> Login(Login model)
         {
             var userDetails = _context.Users.FirstOrDefault(m => m.UserName!.ToLower() == model.Username!.ToLower() && m.Password!.ToLower() == model.Password!.ToLower());
             if (userDetails != null)
@@ -64,7 +64,7 @@ namespace MobileManiaAPI.Services
                 return response;
             }
             response.success = false;
-            response.data = StatusCodes.Status401Unauthorized;
+            response.data = StatusCodes.Status401Unauthorized.ToString();
             return response;
 
         }

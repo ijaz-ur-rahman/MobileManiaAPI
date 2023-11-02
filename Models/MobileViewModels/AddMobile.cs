@@ -38,7 +38,7 @@
 
         public string? Usb { get; set; }
 
-        public bool? Camera { get; set; }
+        public bool? Camera { get; set; } = false;
 
         public string? PrimaryCamera { get; set; }
 
@@ -74,21 +74,21 @@
 
         public string? Talktime { get; set; }
 
-        public bool? Tourch { get; set; }
+        public bool? Tourch { get; set; } = false;
 
         public string? Entertainment { get; set; }
 
         public int? DisplayOrder { get; set; }
 
-        public bool? DisplayAtHomePage { get; set; }
+        public bool? DisplayAtHomePage { get; set; } = false;
 
-        public bool? IsSmartPhone { get; set; }
+        public bool? IsSmartPhone { get; set; } = false;
 
-        public bool? IsWindowsPhone { get; set; }
+        public bool? IsWindowsPhone { get; set; } = false;
 
-        public bool? IsAndroidPhone { get; set; }
+        public bool? IsAndroidPhone { get; set; } = false;
 
-        public bool? IsSymbianPhone { get; set; }
+        public bool? IsSymbianPhone { get; set; } = false;
 
         public string? WhatsNew { get; set; }
 
@@ -97,12 +97,12 @@
         public string? _4gband { get; set; }
         public string? _5gband { get; set; }
 
-        public bool? IsLatest { get; set; }
+        public bool? IsLatest { get; set; } = false;
 
-        public bool? Is3G { get; set; }
+        public bool? Is3G { get; set; } = false;
 
-        public bool? Is4G { get; set; }
-        public bool? Is5G { get; set; }
+        public bool? Is4G { get; set; } = false;
+        public bool? Is5G { get; set; } = false;
 
         public decimal? ScreenSizeInInches { get; set; }
 

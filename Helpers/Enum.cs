@@ -2,24 +2,6 @@
 
 namespace MobileManiaAPI.Helpers
 {
-    public enum Status
-    {
-        Application_Received_OR_In_Process = 1,
-        Application_Needs_Attention = 2,
-        Application_Approved = 3,
-        Application_Waiting_For_Signatures = 4,
-        Application_File_Being_Finalized = 5,
-        Application_Complete = 6,
-        Application_Cancelled = 7,
-        Application_Declined = 8,
-    }
-    public enum Role
-    {
-        Admin = 1,
-        SuperAdmin = 2,
-        VendorAdmin = 3,
-        VendorNonAdmin = 4
-    }
 
     public sealed class RightType
     {
@@ -31,12 +13,7 @@ namespace MobileManiaAPI.Helpers
         public const string none = "none";
 
     }
-    public enum AddressType
-    {
-        commercial_location = 1,
-        home_address = 2,
-        po_box = 3
-    }
+
     public enum Settings
     {
         NewApplications = 1,
@@ -54,25 +31,11 @@ namespace MobileManiaAPI.Helpers
         public const string vendor = "vendor";
         public const string annonymous = "annonymous";
     }
-    public sealed class AppPath
-    {
-        private AppPath() { }
-        public const string CommentDocumentPath = "uploads/comment-document";
-        public const string NotificationDocumentPath = "uploads/notification-document";
-        // public const string ReportPDFPath = "uploads\\report-pdf";
-        public const string ApplicationDocumentPath = "uploads/application-document";
-        public const string LenderLogoPath = "uploads/lender-logo";
-        public const string LenderDocumentPath = "uploads/lender-document";
-        public const string VendorLogoPath = "uploads/vendor-logo";
-        public const string VendorDocumentPath = "uploads/vendor-document";
-        public const string ProfileImagePath = "uploads/profile-image";
-        public const string AssetsPath = "uploads/assets";
 
-    }
-    public sealed class FilePath
+    public sealed class FilePaths
     {
-        private FilePath() { }
-        public const string ProfileImage = "/api/getprofileimage/";
+        private FilePaths() { }
+        public const string MobileImagesPath = "UploadedImages";
         public const string LenderLogo = "/api/getlenderlogo/";
         public const string VendorLogo = "/api/getvendorlogo/";
         public const string AppDoc = "/api/getappdoc/";
@@ -95,26 +58,7 @@ namespace MobileManiaAPI.Helpers
             return descriptionAttributes.Length > 0 ? descriptionAttributes[0].Description : enumValue.ToString();
         }
     }
-    //public static class ApplicationUrl
-    //{
-    //    // parameterless constructor required for static class
-    //    static ApplicationUrl() { } // default value
-
-    //    // public get, and private set for strict access control
-    //    public static string baseUrl { get; private set; }
-
-    //    // GlobalInt can be changed only via this method
-    //    public static void SetNewValue(string newVal)
-    //    {
-    //        baseUrl = newVal;
-    //    }
-    //}
-    //public static class ApplicationUrl
-    //{
-    //    public static string baseUrl { get; set; }
-
-    //}
-
+   
     public sealed class GeneralMessage
     {
         private GeneralMessage() { }
@@ -122,7 +66,6 @@ namespace MobileManiaAPI.Helpers
         public const string StatusSuccess = "Success";
         public const string StatusWarning = "Warning";
         public const string StatusInfo = "Info";
-        //public const string StatusException = "Exception";
 
         public const string ChangesSaved = "Changes have been saved successfully";
         public const string ClonedApplication = "Application Cloned successfully";
@@ -149,12 +92,11 @@ namespace MobileManiaAPI.Helpers
         public const string DocumentDeleteError = "This document can't be deleted because it's uploaded by faastrak team.";
 
     }
-    public class ServiceResponse
+    public class ServiceResponse<T>
     {
         public bool success { get; set; }
         public string message { get; set; }
-        //public string errorMessage { get; set; }
-        public object data { get; set; }
+        public T data { get; set; }
     }
     public static class FileTypes
     {

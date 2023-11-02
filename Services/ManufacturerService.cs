@@ -9,15 +9,15 @@ namespace MobileManiaAPI.Services
 {
     public interface IManufacturerService
     {
-        ServiceResponse GetAll();
-        ServiceResponse GetById(int Id);
-        ServiceResponse Create(AddManufacturer model);
-        ServiceResponse Update(int id, UpdateManufacturer model);
-        ServiceResponse Delete(int id);
+        ServiceResponse<object> GetAll();
+        ServiceResponse<object> GetById(int Id);
+        ServiceResponse<string> Create(AddManufacturer model);
+        ServiceResponse<string> Update(int id, UpdateManufacturer model);
+        ServiceResponse<string> Delete(int id);
     }
     public class ManufacturerService : IManufacturerService
     {
-        private ServiceResponse response;
+        private ServiceResponse<object> response;
         private DataContext _context;
         private readonly IMapper _mapper;
         public ManufacturerService(
@@ -26,19 +26,19 @@ namespace MobileManiaAPI.Services
         {
             _context = context;
             _mapper = mapper;
-            response = new ServiceResponse();
+            response = new ServiceResponse<object>();
         }
-        public ServiceResponse Create(AddManufacturer model)
+        public ServiceResponse<string> Create(AddManufacturer model)
         {
             throw new NotImplementedException();
         }
 
-        public ServiceResponse Delete(int id)
+        public ServiceResponse<string> Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public ServiceResponse GetAll()
+        public ServiceResponse<object> GetAll()
         {
             try
             {
@@ -62,12 +62,12 @@ namespace MobileManiaAPI.Services
 
         }
 
-        public ServiceResponse GetById(int id)
+        public ServiceResponse<object> GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public ServiceResponse Update(int id, UpdateManufacturer model)
+        public ServiceResponse<string> Update(int id, UpdateManufacturer model)
         {
             throw new NotImplementedException();
         }

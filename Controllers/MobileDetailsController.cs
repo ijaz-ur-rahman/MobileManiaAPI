@@ -155,7 +155,7 @@ namespace MobileManiaAPI.Controllers
                 return Ok(new
                 {
                     Status = GeneralMessage.StatusSuccess,
-                    Data = result.data
+                    Data = result.message
                 });
             }
             else
