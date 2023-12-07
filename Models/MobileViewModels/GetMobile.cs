@@ -1,4 +1,6 @@
-﻿namespace MobileManiaAPI.Models.MobileViewModels
+﻿using MobileManiaAPI.Entities;
+
+namespace MobileManiaAPI.Models.MobileViewModels
 {
     public class GetMobile
     {
@@ -118,5 +120,8 @@
 
         public int? CameraPixels { get; set; }
         public string? ManufacturerName { get; set; }
+        public List<Comment>? Comments { get; set; }
+        public List<Rating>? Ratings { get; set; }
+
     }
 }
